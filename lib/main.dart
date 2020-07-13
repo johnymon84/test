@@ -7,19 +7,16 @@ void main() {
   runApp(ExpenseApp());
 }
 
-
-
-
 class ExpenseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
+      theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.red.shade600),
       home: MyHomePage(),
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -54,38 +51,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          title: Text('Expense App'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _startAddNewTransaction(context),
-            )
-          ],
-        ),
-        body: Container(
-          width: double.infinity,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Card(
-                  color: Colors.blueAccent,
-                  child: Text('This is a Chart'),
-                ),
-                
-                TransactioList(_userTransactions),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Expense App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewTransaction(context),
+          )
+        ],
+      ),
+      body: Container(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card(
+                child: Text('This is a Chart'),
+              ),
+              TransactioList(_userTransactions),
+            ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context)),
-      );
-
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context)),
+    );
   }
 }
