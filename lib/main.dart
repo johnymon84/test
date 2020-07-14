@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './widgets/transaction_list.dart';
 import './widgets/new_Transactions.dart';
 import './models/transactions.dart';
+import './widgets/chart.dart';
 
 void main() {
   runApp(ExpenseApp());
@@ -12,7 +13,8 @@ class ExpenseApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
-      theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.red.shade600),
+      theme: ThemeData(
+          primarySwatch: Colors.red, accentColor: Colors.red.shade600),
       home: MyHomePage(),
     );
   }
@@ -24,10 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transactions> _userTransactions = [
-    Transactions(id: '1', title: 'Loan', amount: 25.0, date: DateTime.now()),
-    Transactions(id: '2', title: 'Grocery', amount: 50.0, date: DateTime.now()),
-  ];
+  final List<Transactions> _userTransactions = [];
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final tx = Transactions(
@@ -38,6 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _userTransactions.add(tx);
     });
+  }
+
+  List<Transactions> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
   }
 
   void _startAddNewTransaction(BuildContext cxt) {
@@ -68,9 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Card(
-                child: Text('This is a Chart'),
-              ),
+              Chart(_recentTransactions),
               TransactioList(_userTransactions),
             ],
           ),

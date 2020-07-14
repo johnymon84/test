@@ -1,4 +1,3 @@
-import 'package:expense/models/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transactions.dart';
@@ -12,7 +11,17 @@ class TransactioList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(itemBuilder: (ctx,index){
+      child: transactions.isEmpty ?  
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text('Your List is Empty',style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
+            Image.network('http://www.pngkey.com/png/full/846-8466599_list-is-empty.png',height: 200.0,),
+          ],
+        )
+        :
+        ListView.builder(itemBuilder: (ctx,index){
         return Card(
                             child: Row(
                           children: <Widget>[
